@@ -8,6 +8,14 @@ public class Account {
     private int accountId;
     private BigDecimal balance;
 
+
+
+    public Account() {
+    }
+
+    public Account(int id, int accountId, BigDecimal balance) {
+    }
+
     public int getUserId() {
         return userId;
     }
