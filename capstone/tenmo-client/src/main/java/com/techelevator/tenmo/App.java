@@ -60,6 +60,7 @@ public class App {
     private void handleLogin() {
         UserCredentials credentials = consoleService.promptForCredentials();
         currentUser = authenticationService.login(credentials);
+        accountService.setAuthToken(currentUser.getToken());
         if (currentUser == null) {
             consoleService.printErrorMessage();
         }
