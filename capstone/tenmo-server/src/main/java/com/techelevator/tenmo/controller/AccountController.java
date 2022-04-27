@@ -12,7 +12,7 @@ import java.security.Principal;
 
 
 @RestController
-@RequestMapping("Account")
+@RequestMapping("account")
 @PreAuthorize("isAuthenticated()")
 public class AccountController {
 
@@ -26,11 +26,12 @@ public class AccountController {
     }
 
     @GetMapping
-    public void getBalance(Principal principal, @RequestBody Account account) {
+    public BigDecimal getBalance(Principal principal) {
         String userName = principal.getName();
         int userId = userDao.findIdByUsername(userName);
 
-        BigDecimal balance = accountDao.getBalance(userId, account);
+        BigDecimal balance = accountDao.getBalance(userId);
+        return balance;
 
     }
 
