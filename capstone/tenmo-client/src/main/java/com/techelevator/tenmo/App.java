@@ -60,10 +60,10 @@ public class App {
     private void handleLogin() {
         UserCredentials credentials = consoleService.promptForCredentials();
         currentUser = authenticationService.login(credentials);
-        accountService.setAuthToken(currentUser.getToken());
         if (currentUser == null) {
             consoleService.printErrorMessage();
         }
+        accountService.setAuthToken(currentUser.getToken());
     }
 
     private void mainMenu() {
@@ -93,8 +93,8 @@ public class App {
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
 
-        BigDecimal balance = accountService.getbalance();
-        System.out.println("Your current account balance is: " + balance);
+
+        System.out.println("Your current account balance is: " + accountService.getBalance(currentUser.getUser().getId()));
 
 	}
 

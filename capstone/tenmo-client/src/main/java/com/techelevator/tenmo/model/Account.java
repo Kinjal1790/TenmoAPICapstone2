@@ -1,15 +1,18 @@
 package com.techelevator.tenmo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class Account {
 
 
-    private int accountId;
+    private long userId;
+    private long accountId;
     private BigDecimal balance;
-    private int userId;
 
-    public Account(int accountId, BigDecimal balance, int userId) {
+
+    public Account(long accountId, BigDecimal balance, long userId) {
         this.accountId = accountId;
         this.balance = balance;
         this.userId = userId;
@@ -19,11 +22,11 @@ public class Account {
     }
 
 
-    public int getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 
@@ -35,11 +38,11 @@ public class Account {
         this.balance = balance;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

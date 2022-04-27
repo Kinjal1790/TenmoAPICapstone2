@@ -25,13 +25,18 @@ public class AccountController {
         this.userDao = userDao;
     }
 
-    @GetMapping
-    public BigDecimal getBalance(Principal principal) {
-        String userName = principal.getName();
-        int userId = userDao.findIdByUsername(userName);
 
-        BigDecimal balance = accountDao.getBalance(userId);
-        return balance;
+//    @GetMapping("/{id}/balance")
+//    @PreAuthorize("permitAll()")
+//    public BigDecimal getBalance(@PathVariable long userId){
+//        return accountDao.getBalance(userId);
+//    }
+
+
+    @GetMapping("/{id}")
+    public Account getAccount(@PathVariable long id) {
+
+        return accountDao.getAccount(id);
 
     }
 

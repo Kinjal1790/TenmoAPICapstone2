@@ -1,10 +1,7 @@
 package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.Account;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,17 +28,17 @@ public class AccountService {
         this.authToken = authToken;
     }
 
-    public BigDecimal getbalance(){
-        BigDecimal balance = null;
+    public BigDecimal getBalance(long userId){
+        Account account = null;
         try
         {
-            String url = baseUrl + "account";
+            String url = baseUrl + "account/" + userId;
             HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setBearerAuth(authToken);
             HttpEntity<Void> entity = new HttpEntity<>(headers);
-
             ResponseEntity<Account> response = restTemplate.exchange(url, HttpMethod.GET, entity, Account.class);
-            balance = response.getBody().getBalance();
+            account = response.getBody();
 
         }
         catch(RestClientResponseException e)
@@ -49,6 +46,6 @@ public class AccountService {
             e.getRawStatusCode();
         }
 
-        return balance;
+        return account.getBalance();
     }
 }

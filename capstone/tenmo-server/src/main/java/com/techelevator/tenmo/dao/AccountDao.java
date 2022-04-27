@@ -7,5 +7,8 @@ import java.math.BigDecimal;
 public interface AccountDao {
 
 
-    BigDecimal getBalance(int userId);
+    BigDecimal getBalance(long userId);
+
+    Account getAccount(long userId);
+
 }
