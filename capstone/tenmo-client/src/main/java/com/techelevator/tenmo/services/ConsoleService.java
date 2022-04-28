@@ -1,10 +1,15 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+
+import static org.bouncycastle.asn1.x509.X509ObjectIdentifiers.id;
 
 public class ConsoleService {
 
@@ -88,4 +93,52 @@ public class ConsoleService {
         System.out.println("An error occurred. Check the log for details.");
     }
 
+    public void displayLisOfUsers(List<User> users) {
+
+
+        System.out.println();
+        System.out.println("---------------------------------------");
+        System.out.println("Users" + "     " + "Name\n" + "ID");
+        System.out.println("---------------------------------------");
+
+
+
+        users.forEach((user) -> {
+            String format = "%d %10s";
+            String message = String.format(format, user.getId(), user.getUsername());
+            System.out.println(message);
+        });
+
+        System.out.println("---------------------------------------");
+
+    }
+
+    public String getIdOfSelectedUser() {
+            System.out.println();
+            System.out.print("Enter ID of user you are sending to (0 to cancel): ");
+            String id = scanner.nextLine().trim().toUpperCase();
+            return id;
+    }
+
+    public User getUser(List<User> users, String id) {
+        User selectedUser = null;
+        for (User user : users) {
+            if (user.getId().equals(id)) {
+                selectedUser = user;
+            }
+        }
+        return selectedUser;
+    }
+
+    public BigDecimal promptForAmount() {
+        System.out.println("please enter amount: ");
+        while (true) {
+            try {
+                return new BigDecimal(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a decimal number.");
+            }
+        }
+
+    }
 }

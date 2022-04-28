@@ -2,18 +2,24 @@ package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.UserService;
+import org.apiguardian.api.API;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 public class App {
 
     private static final String API_BASE_URL = "http://localhost:8080/";
 
     private final ConsoleService consoleService = new ConsoleService();
+    private final UserService userService = new UserService(API_BASE_URL);
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
     private final AccountService accountService = new AccountService(API_BASE_URL);
     private final Account account = new Account();
@@ -64,6 +70,7 @@ public class App {
             consoleService.printErrorMessage();
         }
         accountService.setAuthToken(currentUser.getToken());
+        userService.setAuthToken(currentUser.getToken());
     }
 
     private void mainMenu() {
@@ -110,7 +117,15 @@ public class App {
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-		
+        List<User> users = userService.getAllUser();
+        consoleService.displayLisOfUsers(users);
+        String userIdOfSelectedUser = consoleService.getIdOfSelectedUser();
+        if(userIdOfSelectedUser.equals("0")){
+            break;
+        }
+        User selectedUser = consoleService.getUser(users, userIdOfSelectedUser);
+        BigDecimal amountToTransfer = consoleService.promptForAmount();
+
 	}
 
 	private void requestBucks() {
