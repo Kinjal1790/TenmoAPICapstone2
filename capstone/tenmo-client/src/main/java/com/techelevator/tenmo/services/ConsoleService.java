@@ -142,4 +142,12 @@ public class ConsoleService {
         }
 
     }
+
+    public void displayNotEnoughBalance(){
+        System.out.println("You do not have enough balance in your account to transfer.");
+    }
+
+    public void displayNotAbleToSendMoneyToSelf(){
+        System.out.println("You can not send money to your self.");
+    }
 }

@@ -113,18 +113,28 @@ public class App {
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-        List<User> users = userService.getAllUser();
-        consoleService.displayLisOfUsers(users);
-        String userIdOfSelectedUser = consoleService.getIdOfSelectedUser();
+        while(true) {
+            List<User> users = userService.getAllUser();
+            consoleService.displayLisOfUsers(users);
+            String userIdOfSelectedUser = consoleService.getIdOfSelectedUser();
 
-        User selectedUser = consoleService.getUser(users, userIdOfSelectedUser);
-        viewCurrentBalance();
-        BigDecimal amountToTransfer = consoleService.promptForAmount();
+            User selectedUser = consoleService.getUser(users, userIdOfSelectedUser);
+            if(selectedUser.getId() != currentUser.getUser().getId()) {
+                viewCurrentBalance();
+                BigDecimal amountToTransfer = consoleService.promptForAmount();
 
-        Transfer transfer = new Transfer(currentUser.getUser(), selectedUser, amountToTransfer);
+                if (amountToTransfer.equals(account.getBalance())) {
+                    Transfer transfer = new Transfer(currentUser.getUser().getId(), selectedUser.getId(), amountToTransfer);
+                    transferService.initiateTransfer(transfer);
+                } else {
+                    consoleService.displayNotEnoughBalance();
+                }
+            }
+            else{
+                consoleService.displayNotAbleToSendMoneyToSelf();
+            }
 
-        transferService.initiateTransfer(transfer);
-
+        }
 	}
 
 	private void requestBucks() {

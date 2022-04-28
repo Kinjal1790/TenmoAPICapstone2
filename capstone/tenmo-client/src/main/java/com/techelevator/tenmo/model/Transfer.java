@@ -4,31 +4,31 @@ import java.math.BigDecimal;
 
 public class Transfer {
 
-    private User fromUser;
-    private User toUser;
+    private long fromUser;
+    private long toUser;
     private BigDecimal amount;
 
 
-    public Transfer(User fromUser, User toUser, BigDecimal amount) {
+    public Transfer(long fromUser, long toUser, BigDecimal amount) {
         this.fromUser = fromUser;
         this.toUser = toUser;
         this.amount = amount;
     }
 
 
-    public User getFromUser() {
+    public long getFromUser() {
         return fromUser;
     }
 
-    public void setFromUser(User fromUser) {
+    public void setFromUser(long fromUser) {
         this.fromUser = fromUser;
     }
 
-    public User getToUser() {
+    public long getToUser() {
         return toUser;
     }
 
-    public void setToUser(User toUser) {
+    public void setToUser(long toUser) {
         this.toUser = toUser;
     }
 

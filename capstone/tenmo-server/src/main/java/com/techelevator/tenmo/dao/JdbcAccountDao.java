@@ -51,7 +51,6 @@ public class JdbcAccountDao implements AccountDao {
                 "FROM account " +
                 "Where user_id = ?";
 
-        BigDecimal balance = null;
 
 
         SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, userId);
