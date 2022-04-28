@@ -41,5 +41,13 @@ public class AccountController {
 
     }
 
+//    @GetMapping
+//    public Account getAccount(Principal principal) {
+//        String username = principal.getName();
+//        User user = userDao.findByUsername(username);
+//        return accountDao.get
+//
+//    }
+
 
 }

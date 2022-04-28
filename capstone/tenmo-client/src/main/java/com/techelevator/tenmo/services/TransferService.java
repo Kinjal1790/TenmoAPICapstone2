@@ -26,13 +26,14 @@ public class TransferService {
 
     public Transfer initiateTransfer(Transfer transfer){
             Transfer transfer1 = null;
+            String url = baseUrl + "transfer";
             try
             {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
                 headers.setBearerAuth(authToken);
-                HttpEntity<Void> entity = new HttpEntity<>(headers);
-                transfer1 = restTemplate.postForObject(baseUrl, entity, Transfer.class);
+                HttpEntity<Transfer> entity = new HttpEntity<>(transfer, headers);
+                transfer1 = restTemplate.postForObject(url, entity, Transfer.class);
 
             }
             catch(RestClientResponseException e)

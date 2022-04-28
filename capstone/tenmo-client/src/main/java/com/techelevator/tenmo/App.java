@@ -97,7 +97,7 @@ public class App {
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
 
-        System.out.println("Your current account balance is: " + account.getBalance());
+        System.out.println("Your current account balance is: " + accountService.getBalance(currentUser.getUser().getId()));
 
 	}
 
@@ -112,30 +112,38 @@ public class App {
 	}
 
 	private void sendBucks() {
-		// TODO Auto-generated method stub
-        while(true) {
+        // TODO Auto-generated method stub
+        while (true) {
             List<User> users = userService.getAllUser();
             consoleService.displayLisOfUsers(users);
             String userIdOfSelectedUser = consoleService.getIdOfSelectedUser();
 
             User selectedUser = consoleService.getUser(users, userIdOfSelectedUser);
-            if(selectedUser.getId() != currentUser.getUser().getId()) {
+            if (!(selectedUser.getId().equals(currentUser.getUser().getId()))) {
                 viewCurrentBalance();
+                BigDecimal currentBalance = accountService.getBalance(currentUser.getUser().getId());
                 BigDecimal amountToTransfer = consoleService.promptForAmount();
-
-                if (amountToTransfer.equals(account.getBalance())) {
+                if(amountToTransfer.equals(BigDecimal.ZERO) || amountToTransfer.doubleValue()<0){
+                    consoleService.displayMessageInValidAmount();
+                    break;
+                }
+                else if (amountToTransfer.compareTo(currentBalance) == -1 || amountToTransfer.compareTo(currentBalance) == 0) {
                     Transfer transfer = new Transfer(currentUser.getUser().getId(), selectedUser.getId(), amountToTransfer);
-                    transferService.initiateTransfer(transfer);
-                } else {
-                    consoleService.displayNotEnoughBalance();
+                    Transfer newTransfer = transferService.initiateTransfer(transfer);
+                    System.out.println();
+                    System.out.println("-----------------------------------");
+                    System.out.println("Transfer status: ");
+                    System.out.println("-----------------------------------");
+                }
+                else {
+                consoleService.displayNotEnoughBalance();
                 }
             }
-            else{
+            else {
                 consoleService.displayNotAbleToSendMoneyToSelf();
             }
-
         }
-	}
+    }
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub

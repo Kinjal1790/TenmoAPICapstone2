@@ -123,7 +123,7 @@ public class ConsoleService {
     public User getUser(List<User> users, String id) {
         User selectedUser = null;
         for (User user : users) {
-            if (user.getId().equals(id)) {
+            if (user.getId().toString().equals(id)) {
                 selectedUser = user;
             }
         }
@@ -149,5 +149,9 @@ public class ConsoleService {
 
     public void displayNotAbleToSendMoneyToSelf(){
         System.out.println("You can not send money to your self.");
+    }
+
+    public void displayMessageInValidAmount(){
+        System.out.println("You can not transfer negative or 0 amount.");
     }
 }

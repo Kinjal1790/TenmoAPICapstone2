@@ -2,6 +2,7 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ public class JdbcTransferDao implements TransferDao{
     @Override
     public Transfer createTransfer(Transfer transfer) {
 
-       String sql = "INSERT INTO transfer('account_from', 'account_to', balance) " +
+       String sql = "INSERT INTO transfer (account_from, account_to, amount) " +
                "VALUES (?,?,?);";
 
        String sql1 = "UPDATE account" +
@@ -42,11 +43,18 @@ public class JdbcTransferDao implements TransferDao{
                 "WHERE user_id = ?;";
 
 
+        try {
+
         jdbcTemplate.update(sql, transfer.getFromUserId(), transfer.getToUserId(), transfer.getAmount());
         jdbcTemplate.update(sql1, transfer.getAmount(), transfer.getFromUserId());
         jdbcTemplate.update(sql2, transfer.getAmount(), transfer.getToUserId());
+        }
 
+        catch (Exception e) {
+            e.getMessage();
+        }
 
-        return null;
+        return transfer;
+
     }
 }
