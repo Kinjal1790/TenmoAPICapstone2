@@ -131,6 +131,7 @@ public class ConsoleService {
     }
 
     public BigDecimal promptForAmount() {
+        System.out.println("");
         System.out.println("please enter amount: ");
         while (true) {
             try {
