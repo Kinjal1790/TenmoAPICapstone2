@@ -10,6 +10,17 @@ public class Transfer {
     private long toUserId;
     private BigDecimal amount;
 
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "transfer_id=" + transfer_id +
+                ", transferTypeId=" + transferTypeId +
+                ", transferStatusId=" + transferStatusId +
+                ", fromUserId=" + fromUserId +
+                ", toUserId=" + toUserId +
+                ", amount=" + amount +
+                '}';
+    }
 //    public long getAccount_from() {
 //        return account_from;
 //    }
@@ -28,6 +39,8 @@ public class Transfer {
 
 //    private long account_from;
 //    private long account_to;
+
+
 
 
     public long getTransfer_id() {
@@ -59,7 +72,7 @@ public class Transfer {
     }
 
     public void setFromUserId(long fromUserId) {
-        fromUserId = fromUserId;
+        this.fromUserId = fromUserId;
     }
 
     public long getToUserId() {
@@ -67,7 +80,7 @@ public class Transfer {
     }
 
     public void setToUserId(long toUserId) {
-        toUserId = toUserId;
+        this.toUserId = toUserId;
     }
 
     public BigDecimal getAmount() {

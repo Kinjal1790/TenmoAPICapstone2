@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientResponseException;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
@@ -80,21 +81,43 @@ public class JdbcAccountDao implements AccountDao {
     public Account update(Account account) {
         return null;
     }
-//
-////    @Override
-//    public Account updateSubstract(Account account) {
-//
-//            String sql = "UPDATE account " +
-//                    " SET balance = balance - ? "+
-//                    " WHERE user_id = ?;";
-//
-//            // execute the update statement
-//            // NOTE: the parameter MUST be passed in in the same order
-//            // that they appear in the sql
-//          //  jdbcTemplate.update(sql, account.
-//        }
-//        return null;
-//    }
+
+
+    @Override
+    public Account substract(Account accountFrom, BigDecimal amountToTransfer) {
+
+        String sql = "UPDATE account " +
+                    " SET balance = balance - ? " +
+                    " WHERE user_id = ?;";
+
+        try{
+            jdbcTemplate.update(sql, amountToTransfer, accountFrom.getUserId());
+        }
+        catch(RestClientResponseException e){
+            System.out.println(e.getMessage());
+        }
+
+        return accountFrom;
+    }
+
+    @Override
+    public Account add(Account accountTo, BigDecimal amountToAdd) {
+
+
+        String sql = "UPDATE account " +
+                "SET balance = balance + ? " +
+                "WHERE user_id = ?;";
+        try{
+            jdbcTemplate.update(sql, amountToAdd, accountTo.getUserId());
+        }
+        catch(RestClientResponseException e){
+            System.out.println(e.getMessage());
+        }
+
+        return accountTo;
+
+    }
+
 
 
     private Account mapRowToAccount(SqlRowSet rows) {

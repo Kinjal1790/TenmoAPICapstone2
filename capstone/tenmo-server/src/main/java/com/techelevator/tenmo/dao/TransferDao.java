@@ -14,4 +14,6 @@ public interface TransferDao {
 
     @Transactional
     Transfer createTransfer(Transfer transfer, Account accountFrom, Account accountTo);
+
+    Transfer findbyId(long transfer_id);
 }

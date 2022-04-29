@@ -15,9 +15,11 @@ import java.util.List;
 public class JdbcTransferDao implements TransferDao{
 
     private JdbcTemplate jdbcTemplate;
+    private AccountDao accountDao;
     @Autowired
-    public JdbcTransferDao(DataSource dataSource){
+    public JdbcTransferDao(DataSource dataSource, AccountDao accountDao){
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.accountDao = accountDao;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class JdbcTransferDao implements TransferDao{
     }
 
     private static int TRANSFER_STATUS_ID = 2;
-    private static int TRANSFER_TYPE_ID = 2;
+    private static int TRANSFER_TYPE_ID = 1;
 
 
     @Transactional
@@ -34,36 +36,48 @@ public class JdbcTransferDao implements TransferDao{
     public Transfer createTransfer(Transfer transfer, Account accountFrom, Account accountTo) {
         Transfer newTransfer = new Transfer();
 
-
-//        String accountId = "SELECT account_id from account where user_id = ?;";
-//        Integer accountIdFrom = jdbcTemplate.queryForObject(accountId, Integer.class, transfer.getFromUserId());
-//
-//        String accountId1 = "SELECT account_id from account where user_id = ?;";
-//        Integer accountIdTo = jdbcTemplate.queryForObject(accountId, Integer.class, transfer.getToUserId());
-
-
-
        String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
                "VALUES (?,?,?,?,?);";
 
-        String sql1 = "UPDATE account" +
-                "SET balance = balance - ? " +
-                "WHERE user_id = ?;";
 
-        String sql2 = "UPDATE account" +
-                "SET balance = balance + ? " +
-                "WHERE user_id = ?;";
+        long transfer_id = jdbcTemplate.queryForObject(sql, Integer.class, TRANSFER_TYPE_ID, TRANSFER_STATUS_ID, accountFrom.getAccountId(), accountTo.getAccountId(), transfer.getAmount());
+
+        accountDao.substract(accountFrom, transfer.getAmount());
+        accountDao.add(accountTo, transfer.getAmount());
+
+        return findbyId(transfer_id) ;
+
+    }
+
+    @Override
+    public Transfer findbyId(long transfer_id) {
+
+        String sql = "SELECT t.transfer_id\n" +
+            ", ts.transfer_status_desc as status\n" +
+            ", tt.transfer_type_desc as type\n" +
+            ", uf.user_id as from_user_id\n" +
+            ", uf.username as from_username\n" +
+            ", ut.user_id as to_user_id\n" +
+            ", ut.username as to_username\n" +
+            ", t.amount\n" +
+            "FROM transfer as t\n" +
+            "INNER JOIN transfer_status ts\n" +
+            "   ON t.transfer_status_id = ts.transfer_status_id\n" +
+            "INNER JOIN transfer_type tt\n" +
+            "   ON t.transfer_type_id = tt.transfer_type_id\n" +
+            "INNER JOIN account af\n" +
+            "   ON af.account_id = t.account_from\n" +
+                "INNER JOIN tenmo_user uf\n" +
+                "   ON us.user_id = af.user_id\n" +
+                "INNER JOIN account at\n" +
+                "   ON at.account_id = t.account_to\n" +
+                "INNER JOIN tenmo_user ut\n" +
+                "   ON ut.user_id = at.user_id\n" +
+            "WHERE t.transfer_id = ?;";
 
 
-        try {
-            jdbcTemplate.update(sql, TRANSFER_TYPE_ID, TRANSFER_STATUS_ID, accountFrom.getAccountId(), accountTo.getAccountId(), transfer.getAmount());
-        jdbcTemplate.update(sql1, transfer.getAmount(), accountFrom.getUserId());
-        jdbcTemplate.update(sql2, transfer.getAmount(), accountTo.getUserId());
-        }
+        Transfer transfer = jdbcTemplate.queryForObject(sql, Transfer.class, transfer_id);
 
-        catch (Exception e) {
-            e.getMessage();
-        }
 
         return transfer;
 

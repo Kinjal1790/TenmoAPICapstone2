@@ -30,7 +30,12 @@ public class TransferController {
     }
 
     @PostMapping()
-    public Transfer doTransfer(@RequestBody Transfer transfer) {
+    public Transfer doTransfer(@RequestBody Transfer transfer, Principal principal) {
+
+//        System.out.println("DEBUG ANDY");
+//        System.out.println(transfer);
+//        return null;
+
         Account accountFrom = accountDao.getAccount(transfer.getFromUserId());
         Account accountTo = accountDao.getAccount(transfer.getToUserId());
 
@@ -38,6 +43,4 @@ public class TransferController {
         return transferDao.createTransfer(transfer, accountFrom, accountTo);
 
     }
-
-
 }

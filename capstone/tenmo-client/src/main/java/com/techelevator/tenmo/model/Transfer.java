@@ -11,6 +11,17 @@ public class Transfer {
     private long transferStatusId;
     private long transferTypeId;
 
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "transfer_id=" + transfer_id +
+                ", fromUserId=" + fromUserId +
+                ", toUserId=" + toUserId +
+                ", amount=" + amount +
+                ", transferStatusId=" + transferStatusId +
+                ", transferTypeId=" + transferTypeId +
+                '}';
+    }
 
     public Transfer(long fromUserId, long toUserId, BigDecimal amount, long transferStatusId, long transferTypeId) {
         this.fromUserId = fromUserId;
@@ -71,6 +82,14 @@ public class Transfer {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public long getTransfer_id() {
+        return transfer_id;
+    }
+
+    public void setTransfer_id(long transfer_id) {
+        this.transfer_id = transfer_id;
     }
 }
 

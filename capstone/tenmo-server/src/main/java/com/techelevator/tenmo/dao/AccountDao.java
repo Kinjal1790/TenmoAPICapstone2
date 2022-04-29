@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface AccountDao {
 
-
     BigDecimal getBalance(long userId);
 
     Account getAccount(long userId);
@@ -15,4 +14,8 @@ public interface AccountDao {
     List<Account> findAll();
 
     Account update(Account account);
+
+    Account add(Account accountFrom, BigDecimal amountToTransfer);
+
+    Account substract(Account accountTo, BigDecimal AmountToAdd);
 }
