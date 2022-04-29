@@ -10,6 +10,26 @@ public class Transfer {
     private long toUserId;
     private BigDecimal amount;
 
+    public long getAccount_from() {
+        return account_from;
+    }
+
+    public void setAccount_from(long account_from) {
+        this.account_from = account_from;
+    }
+
+    public long getAccount_to() {
+        return account_to;
+    }
+
+    public void setAccount_to(long account_to) {
+        this.account_to = account_to;
+    }
+
+    private long account_from;
+    private long account_to;
+
+
     public long getTransfer_id() {
         return transfer_id;
     }

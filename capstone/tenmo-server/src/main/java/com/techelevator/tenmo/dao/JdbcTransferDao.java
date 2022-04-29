@@ -30,13 +30,23 @@ public class JdbcTransferDao implements TransferDao{
     @Transactional
     @Override
     public Transfer createTransfer(Transfer transfer) {
+        Transfer newTransfer = new Transfer();
 
-       String sql = "INSERT INTO transfer (account_from, account_to, amount) " +
-               "VALUES (?,?,?);";
 
-       String sql1 = "UPDATE account" +
-                      "SET balance = balance - ? " +
-                        "WHERE user_id = ?;";
+//        String accountId = "SELECT account_id from account where user_id = ?;";
+//        Integer accountIdFrom = jdbcTemplate.queryForObject(accountId, Integer.class, transfer.getFromUserId());
+//
+//        String accountId1 = "SELECT account_id from account where user_id = ?;";
+//        Integer accountIdTo = jdbcTemplate.queryForObject(accountId, Integer.class, transfer.getToUserId());
+
+
+
+       String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
+               "VALUES (?,?,?,?, ?);";
+
+        String sql1 = "UPDATE account" +
+                "SET balance = balance - ? " +
+                "WHERE user_id = ?;";
 
         String sql2 = "UPDATE account" +
                 "SET balance = balance + ? " +
@@ -44,8 +54,7 @@ public class JdbcTransferDao implements TransferDao{
 
 
         try {
-
-        jdbcTemplate.update(sql, transfer.getFromUserId(), transfer.getToUserId(), transfer.getAmount());
+            jdbcTemplate.update(sql, transfer.getTransferTypeId(), transfer.getTransferStatusId(), transfer.getAccount_from(), transfer.getAccount_to(), transfer.getAmount());
         jdbcTemplate.update(sql1, transfer.getAmount(), transfer.getFromUserId());
         jdbcTemplate.update(sql2, transfer.getAmount(), transfer.getToUserId());
         }

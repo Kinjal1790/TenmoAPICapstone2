@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
@@ -48,6 +49,18 @@ public class AccountController {
 //        return accountDao.get
 //
 //    }
+
+
+    @RequestMapping(path = "/list", method = RequestMethod.GET)
+    public List<Account> listAccounts() {
+
+        return accountDao.findAll();
+    }
+
+    @RequestMapping(path = "/account/", method = RequestMethod.PUT)
+    public Account update(@Valid @RequestBody Account account){
+        return accountDao.update(account);
+    }
 
 
 }

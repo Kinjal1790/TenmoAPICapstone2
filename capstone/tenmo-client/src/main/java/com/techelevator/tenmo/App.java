@@ -128,7 +128,13 @@ public class App {
                     break;
                 }
                 else if (amountToTransfer.compareTo(currentBalance) == -1 || amountToTransfer.compareTo(currentBalance) == 0) {
-                    Transfer transfer = new Transfer(currentUser.getUser().getId(), selectedUser.getId(), amountToTransfer);
+
+                   // Transfer transfer = new Transfer(currentUser.getUser().getId(), selectedUser.getId(), amountToTransfer, 2,1);
+
+                    Transfer transfer = new Transfer(accountService.getId(currentUser.getUser().getId()), accountService.getId(selectedUser.getId()), amountToTransfer, 2,1);
+
+
+
                     Transfer newTransfer = transferService.initiateTransfer(transfer);
                     System.out.println();
                     System.out.println("-----------------------------------");

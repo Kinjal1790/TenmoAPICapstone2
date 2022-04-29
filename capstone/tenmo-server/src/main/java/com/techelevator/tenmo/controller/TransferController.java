@@ -29,7 +29,6 @@ public class TransferController {
 
     @PostMapping()
     public Transfer doTransfer(@RequestBody Transfer transfer) {
-
         return transferDao.createTransfer(transfer);
 
     }
