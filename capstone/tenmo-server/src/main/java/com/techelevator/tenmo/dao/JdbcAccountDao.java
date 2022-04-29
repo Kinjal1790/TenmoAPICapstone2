@@ -77,19 +77,24 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     @Override
-    public Account updateSubstract(Account account) {
-
-            String sql = "UPDATE account " +
-                    " SET balance = balance - ? "+
-                    " WHERE user_id = ?;";
-
-            // execute the update statement
-            // NOTE: the parameter MUST be passed in in the same order
-            // that they appear in the sql
-          //  jdbcTemplate.update(sql, account.
-        }
+    public Account update(Account account) {
         return null;
     }
+//
+////    @Override
+//    public Account updateSubstract(Account account) {
+//
+//            String sql = "UPDATE account " +
+//                    " SET balance = balance - ? "+
+//                    " WHERE user_id = ?;";
+//
+//            // execute the update statement
+//            // NOTE: the parameter MUST be passed in in the same order
+//            // that they appear in the sql
+//          //  jdbcTemplate.update(sql, account.
+//        }
+//        return null;
+//    }
 
 
     private Account mapRowToAccount(SqlRowSet rows) {

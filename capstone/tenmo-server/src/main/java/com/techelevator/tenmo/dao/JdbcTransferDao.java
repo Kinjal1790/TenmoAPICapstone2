@@ -1,10 +1,9 @@
 package com.techelevator.tenmo.dao;
 
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +25,13 @@ public class JdbcTransferDao implements TransferDao{
         return null;
     }
 
+    private static int TRANSFER_STATUS_ID = 2;
+    private static int TRANSFER_TYPE_ID = 2;
+
 
     @Transactional
     @Override
-    public Transfer createTransfer(Transfer transfer) {
+    public Transfer createTransfer(Transfer transfer, Account accountFrom, Account accountTo) {
         Transfer newTransfer = new Transfer();
 
 
@@ -42,7 +44,7 @@ public class JdbcTransferDao implements TransferDao{
 
 
        String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
-               "VALUES (?,?,?,?, ?);";
+               "VALUES (?,?,?,?,?);";
 
         String sql1 = "UPDATE account" +
                 "SET balance = balance - ? " +
@@ -54,9 +56,9 @@ public class JdbcTransferDao implements TransferDao{
 
 
         try {
-            jdbcTemplate.update(sql, transfer.getTransferTypeId(), transfer.getTransferStatusId(), transfer.getAccount_from(), transfer.getAccount_to(), transfer.getAmount());
-        jdbcTemplate.update(sql1, transfer.getAmount(), transfer.getFromUserId());
-        jdbcTemplate.update(sql2, transfer.getAmount(), transfer.getToUserId());
+            jdbcTemplate.update(sql, TRANSFER_TYPE_ID, TRANSFER_STATUS_ID, accountFrom.getAccountId(), accountTo.getAccountId(), transfer.getAmount());
+        jdbcTemplate.update(sql1, transfer.getAmount(), accountFrom.getUserId());
+        jdbcTemplate.update(sql2, transfer.getAmount(), accountTo.getUserId());
         }
 
         catch (Exception e) {

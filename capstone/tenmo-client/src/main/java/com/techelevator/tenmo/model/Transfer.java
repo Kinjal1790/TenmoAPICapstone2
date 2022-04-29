@@ -4,19 +4,28 @@ import java.math.BigDecimal;
 
 public class Transfer {
 
-    private long fromUser;
-    private long toUser;
+    private long transfer_id;
+    private long fromUserId;
+    private long toUserId;
     private BigDecimal amount;
-    private long transfer_status_id;
-    private long transfer_type_id;
+    private long transferStatusId;
+    private long transferTypeId;
 
 
-    public Transfer(long fromUser, long toUser, BigDecimal amount, long transfer_status_id, long transfer_type_id) {
-        this.fromUser = fromUser;
-        this.toUser = toUser;
+    public Transfer(long fromUserId, long toUserId, BigDecimal amount, long transferStatusId, long transferTypeId) {
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
         this.amount = amount;
-        this.transfer_status_id = transfer_status_id;
-        this.transfer_type_id = transfer_type_id;
+        this.transferStatusId = transferStatusId;
+        this.transferTypeId = transferTypeId;
+    }
+
+
+    public Transfer(long fromUserId, long toUserId, BigDecimal amount) {
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.amount = amount;
+
     }
 
 
@@ -24,36 +33,36 @@ public class Transfer {
 
     }
 
-    public long getFromUser() {
-        return fromUser;
+    public long getFromUserId() {
+        return fromUserId;
     }
 
-    public void setFromUser(long fromUser) {
-        this.fromUser = fromUser;
+    public void setFromUserId(long fromUserId) {
+        this.fromUserId = fromUserId;
     }
 
-    public long getToUser() {
-        return toUser;
+    public long getToUserId() {
+        return toUserId;
     }
 
-    public void setToUser(long toUser) {
-        this.toUser = toUser;
+    public void setToUserId(long toUserId) {
+        this.toUserId = toUserId;
     }
 
-    public long getTransfer_status_id() {
-        return transfer_status_id;
+    public long getTransferStatusId() {
+        return transferStatusId;
     }
 
-    public void setTransfer_status_id(long transfer_status_id) {
-        this.transfer_status_id = transfer_status_id;
+    public void setTransferStatusId(long transferStatusId) {
+        this.transferStatusId = transferStatusId;
     }
 
-    public long getTransfer_type_id() {
-        return transfer_type_id;
+    public long getTransferTypeId() {
+        return transferTypeId;
     }
 
-    public void setTransfer_type_id(long transfer_type_id) {
-        this.transfer_type_id = transfer_type_id;
+    public void setTransferTypeId(long transferTypeId) {
+        this.transferTypeId = transferTypeId;
     }
 
     public BigDecimal getAmount() {

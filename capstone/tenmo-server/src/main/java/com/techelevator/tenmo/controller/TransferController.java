@@ -20,16 +20,22 @@ public class TransferController {
 
     private TransferDao transferDao;
     private UserDao userDao;
+    private AccountDao accountDao;
 
     @Autowired
-    public TransferController(TransferDao transferDao, UserDao userDao) {
+    public TransferController(TransferDao transferDao, UserDao userDao, AccountDao accountDao) {
         this.transferDao = transferDao;
         this.userDao = userDao;
+        this.accountDao = accountDao;
     }
 
     @PostMapping()
     public Transfer doTransfer(@RequestBody Transfer transfer) {
-        return transferDao.createTransfer(transfer);
+        Account accountFrom = accountDao.getAccount(transfer.getFromUserId());
+        Account accountTo = accountDao.getAccount(transfer.getToUserId());
+
+
+        return transferDao.createTransfer(transfer, accountFrom, accountTo);
 
     }
 
