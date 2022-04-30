@@ -99,11 +99,42 @@ public class App {
 
         System.out.println("Your current account balance is: " + accountService.getBalance(currentUser.getUser().getId()));
 
+
 	}
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
-		
+
+        List<Transfer> transfers = transferService.getAllTransfer(currentUser.getUser().getId());
+        consoleService.displayTransferHistory(transfers, currentUser);
+
+        while(true) {
+            String selectedTransferId = consoleService.getTransferIdOfUser();
+            if (selectedTransferId.equals("0")) {
+                break;
+            }
+
+            boolean transferIdFound = false;
+            if (!transferIdFound) {
+                for (Transfer transfer : transfers) {
+                    if (Long.parseLong(selectedTransferId) == (transfer.getTransfer_id())) {
+                        System.out.println("\nTransfer Details");
+                        System.out.println("---------------------------------");
+                        System.out.println("Id: " + transfer.getTransfer_id());
+                        System.out.println("From: " + transfer.getUsernameFrom());
+                        System.out.println("To: " + transfer.getUsernameTo());
+                        System.out.println("Type: " + transfer.getTransfer_type_desc());
+                        System.out.println("Status: " + transfer.getTransfer_status_desc());
+                        System.out.println("Amount: $" + transfer.getAmount());
+                        transferIdFound = true;
+                        break;
+                    }
+                }
+            }
+            if(!transferIdFound){
+                System.out.println("Transfer ID not found!");
+            }
+        }
 	}
 
 	private void viewPendingRequests() {
@@ -117,7 +148,9 @@ public class App {
             List<User> users = userService.getAllUser();
             consoleService.displayLisOfUsers(users);
             String userIdOfSelectedUser = consoleService.getIdOfSelectedUser();
-
+            if(userIdOfSelectedUser.equals("0")){
+                break;
+            }
             User selectedUser = consoleService.getUser(users, userIdOfSelectedUser);
             if (!(selectedUser.getId().equals(currentUser.getUser().getId()))) {
                 viewCurrentBalance();
@@ -131,15 +164,12 @@ public class App {
 
                     Transfer transfer = new Transfer(currentUser.getUser().getId(), selectedUser.getId(), amountToTransfer);
 
-                 // Transfer transfer = new Transfer(accountService.getId(currentUser.getUser().getId()), accountService.getId(selectedUser.getId()), amountToTransfer, 2,1);
-
-
 
                     Transfer newTransfer = transferService.initiateTransfer(transfer);
                     System.out.println();
                     System.out.println("-----------------------------------");
-                    System.out.println("Transfer status: " + newTransfer.getTransferStatusId());
-                    System.out.println("-----------------------------------");
+                    System.out.println("Transfer status: " + newTransfer.getTransfer_status_desc());
+                   System.out.println("-----------------------------------");
                 }
                 else {
                 consoleService.displayNotEnoughBalance();

@@ -2,12 +2,16 @@ package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.User;
 import com.techelevator.util.BasicLogger;
 import org.springframework.http.*;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TransferService {
 
@@ -47,5 +51,27 @@ public class TransferService {
 
             return transfer1;
         }
+
+    public List<Transfer> getAllTransfer(long userId){
+        List<Transfer> transfers = new ArrayList<>();
+
+            try
+            {
+                String url = baseUrl + "transfer/" + userId;
+                HttpHeaders headers = new HttpHeaders();
+                headers.setBearerAuth(authToken);
+                HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+                ResponseEntity<Transfer[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, Transfer[].class);
+                transfers = Arrays.asList(response.getBody());
+            }
+            catch(RestClientResponseException e)
+            {
+                BasicLogger.log(e.getMessage());
+            }
+
+            return transfers;
+        }
+
 }
 

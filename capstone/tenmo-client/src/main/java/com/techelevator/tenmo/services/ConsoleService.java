@@ -1,6 +1,8 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 
@@ -154,4 +156,34 @@ public class ConsoleService {
     public void displayMessageInValidAmount(){
         System.out.println("You can not transfer negative or 0 amount.");
     }
+
+    public void displayTransferHistory(List<Transfer> transfers, AuthenticatedUser currentUser) {
+
+        System.out.println();
+        System.out.println("---------------------------------------");
+        System.out.println("Transfers\n" + "ID           From/To             Amount");
+        System.out.println("---------------------------------------");
+
+        for(Transfer transfer : transfers) {
+            String message;
+            if(transfer.getFromUserId() == currentUser.getUser().getId()) {
+                String format = "%-12d To: %-15s $ %.2f";
+                 message = String.format(format, transfer.getTransfer_id(), transfer.getUsernameTo(), transfer.getAmount());
+            }
+            else {
+                String format = "%-12d From: %-13s $ %.2f";
+                 message = String.format(format, transfer.getTransfer_id(), transfer.getUsernameFrom(), transfer.getAmount());
+            }
+            System.out.println(message);
+        }
+    }
+
+    public String getTransferIdOfUser() {
+        System.out.println();
+        System.out.print("Please enter transfer ID to view details (0 to cancel): ");
+        String transferId = scanner.nextLine().trim().toUpperCase();
+        return transferId;
+    }
+
+
 }
