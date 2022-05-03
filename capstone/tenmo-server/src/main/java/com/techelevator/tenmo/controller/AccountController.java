@@ -29,38 +29,23 @@ public class AccountController {
     }
 
 
-//    @GetMapping("/{id}/balance")
-//    @PreAuthorize("permitAll()")
-//    public BigDecimal getBalance(@PathVariable long userId){
-//        return accountDao.getBalance(userId);
-//    }
-
-
     @GetMapping("/{id}")
     public Account getAccount(@PathVariable long id) {
         return accountDao.getAccount(id);
 
     }
 
-//    @GetMapping
-//    public Account getAccount(Principal principal) {
-//        String username = principal.getName();
-//        User user = userDao.findByUsername(username);
-//        return accountDao.get
+
+//    @RequestMapping(path = "/list", method = RequestMethod.GET)
+//    public List<Account> listAccounts() {
 //
+//        return accountDao.findAll();
 //    }
-
-
-    @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public List<Account> listAccounts() {
-
-        return accountDao.findAll();
-    }
-
-    @RequestMapping(path = "/account/", method = RequestMethod.PUT)
-    public Account update(@Valid @RequestBody Account account){
-        return accountDao.update(account);
-    }
+//
+//    @RequestMapping(path = "/account/", method = RequestMethod.PUT)
+//    public Account update(@Valid @RequestBody Account account){
+//        return accountDao.update(account);
+//    }
 
 
 }

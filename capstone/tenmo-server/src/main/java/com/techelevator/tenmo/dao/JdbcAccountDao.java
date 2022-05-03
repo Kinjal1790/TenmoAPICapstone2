@@ -28,25 +28,25 @@ public class JdbcAccountDao implements AccountDao {
 
 
 
-    @Override
-    public BigDecimal getBalance(long userId) {
-        Account account = null;
-        String sql = "SELECT user_id, account_id, balance " +
-                "FROM account " +
-                "Where user_id = ?";
-
-        BigDecimal balance = null;
-
-
-        SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, userId);
-
-        if (rows.next()) {
-             account = mapRowToAccount(rows);
-        }
-
-        return account.getBalance();
-
-    }
+//    @Override
+//    public BigDecimal getBalance(long userId) {
+//        Account account = null;
+//        String sql = "SELECT user_id, account_id, balance " +
+//                "FROM account " +
+//                "Where user_id = ?";
+//
+//        BigDecimal balance = null;
+//
+//
+//        SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, userId);
+//
+//        if (rows.next()) {
+//             account = mapRowToAccount(rows);
+//        }
+//
+//        return account.getBalance();
+//
+//    }
 
     @Override
     public Account getAccount(long userId) {
@@ -65,22 +65,7 @@ public class JdbcAccountDao implements AccountDao {
         return account;
     }
 
-    @Override
-    public List<Account> findAll() {
-        List<Account> accounts = new ArrayList<>();
-        String sql = "SELECT account_id, user_id, balance FROM account;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while(results.next()) {
-            Account account = mapRowToAccount(results);
-            accounts.add(account);
-        }
-        return accounts;
-    }
 
-    @Override
-    public Account update(Account account) {
-        return null;
-    }
 
 
     @Override
@@ -132,7 +117,22 @@ public class JdbcAccountDao implements AccountDao {
         return account;
     }
 
+    @Override
+    public List<Account> findAll() {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT account_id, user_id, balance FROM account;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while(results.next()) {
+            Account account = mapRowToAccount(results);
+            accounts.add(account);
+        }
+        return accounts;
+    }
 
+    @Override
+    public Account update(Account account) {
+        return null;
+    }
 
 
 

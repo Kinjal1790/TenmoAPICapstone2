@@ -186,4 +186,30 @@ public class ConsoleService {
     }
 
 
+    public void displayTransferDetails(Transfer transfer) {
+        System.out.println("---------------------------------");
+        System.out.println("Transfer Details");
+        System.out.println("---------------------------------");
+        System.out.println("Id: " + (transfer.getTransfer_id())
+                + "\nFrom: " + (transfer.getUsernameFrom())
+                + "\nTo: " + (transfer.getUsernameTo())
+                + "\nType: " + (transfer.getTransfer_type_desc())
+                + "\nStatus: " + (transfer.getTransfer_status_desc())
+                + "\nAmount: $" + (transfer.getAmount()));
+    }
+
+    public void dipsplayTransferIdNotFound() {
+        System.out.println("Transfer ID not found!");
+    }
+
+    public void displayAccountBalance(BigDecimal balance) {
+        System.out.println("Your current balance is: " + balance);
+    }
+
+    public void displayTransferStatus(String transfer_status_desc) {
+        System.out.println();
+        System.out.println("-----------------------------------");
+        System.out.println("Transfer status: " + transfer_status_desc);
+        System.out.println("-----------------------------------");
+    }
 }

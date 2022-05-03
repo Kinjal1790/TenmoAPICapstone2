@@ -74,22 +74,6 @@ public class Transfer {
         this.toUserId = toUserId;
     }
 
-//    public long getTransferStatusId() {
-//        return transferStatusId;
-//    }
-//
-//    public void setTransferStatusId(long transferStatusId) {
-//        this.transferStatusId = transferStatusId;
-//    }
-//
-//    public long getTransferTypeId() {
-//        return transferTypeId;
-//    }
-//
-//    public void setTransferTypeId(long transferTypeId) {
-//        this.transferTypeId = transferTypeId;
-//    }
-
     public BigDecimal getAmount() {
         return amount;
     }
@@ -106,29 +90,6 @@ public class Transfer {
         this.transfer_id = transfer_id;
     }
 
-
-    //    private long transferStatusId;
-//    private long transferTypeId;
-
-//    @Override
-//    public String toString() {
-//        return "Transfer{" +
-//                "transfer_id=" + transfer_id +
-//                ", fromUserId=" + fromUserId +
-//                ", toUserId=" + toUserId +
-//                ", amount=" + amount +
-//                ", transferStatusId=" + transferStatusId +
-//                ", transferTypeId=" + transferTypeId +
-//                '}';
-//    }
-//
-//    public Transfer(long fromUserId, long toUserId, BigDecimal amount, long transferStatusId, long transferTypeId) {
-//        this.fromUserId = fromUserId;
-//        this.toUserId = toUserId;
-//        this.amount = amount;
-//        this.transferStatusId = transferStatusId;
-//        this.transferTypeId = transferTypeId;
-//    }
 }
 
 

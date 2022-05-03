@@ -97,7 +97,8 @@ public class App {
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
 
-        System.out.println("Your current account balance is: " + accountService.getBalance(currentUser.getUser().getId()));
+        BigDecimal balance =  accountService.getBalance(currentUser.getUser().getId());
+        consoleService.displayAccountBalance(balance);
 
 
 	}
@@ -118,24 +119,18 @@ public class App {
             if (!transferIdFound) {
                 for (Transfer transfer : transfers) {
                     if (Long.parseLong(selectedTransferId) == (transfer.getTransfer_id())) {
-                        System.out.println("\nTransfer Details");
-                        System.out.println("---------------------------------");
-                        System.out.println("Id: " + transfer.getTransfer_id());
-                        System.out.println("From: " + transfer.getUsernameFrom());
-                        System.out.println("To: " + transfer.getUsernameTo());
-                        System.out.println("Type: " + transfer.getTransfer_type_desc());
-                        System.out.println("Status: " + transfer.getTransfer_status_desc());
-                        System.out.println("Amount: $" + transfer.getAmount());
+                        consoleService.displayTransferDetails(transfer);
                         transferIdFound = true;
                         break;
                     }
                 }
             }
             if(!transferIdFound){
-                System.out.println("Transfer ID not found!");
+                consoleService.dipsplayTransferIdNotFound();
             }
         }
 	}
+
 
 	private void viewPendingRequests() {
 		// TODO Auto-generated method stub
@@ -166,10 +161,8 @@ public class App {
 
 
                     Transfer newTransfer = transferService.initiateTransfer(transfer);
-                    System.out.println();
-                    System.out.println("-----------------------------------");
-                    System.out.println("Transfer status: " + newTransfer.getTransfer_status_desc());
-                   System.out.println("-----------------------------------");
+                    consoleService.displayTransferStatus(newTransfer.getTransfer_status_desc());
+
                 }
                 else {
                 consoleService.displayNotEnoughBalance();

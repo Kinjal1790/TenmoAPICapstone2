@@ -27,7 +27,7 @@ public class JdbcTransferDao implements TransferDao{
 
 
     private static int TRANSFER_STATUS_ID = 2;
-    private static int TRANSFER_TYPE_ID = 1;
+    private static int TRANSFER_TYPE_ID = 2;
 
 
 

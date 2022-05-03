@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AccountDao {
 
-    BigDecimal getBalance(long userId);
+  //  BigDecimal getBalance(long userId);
 
     Account getAccount(long userId);
 

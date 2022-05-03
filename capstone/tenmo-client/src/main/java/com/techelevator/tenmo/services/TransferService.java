@@ -32,9 +32,6 @@ public class TransferService {
             Transfer transfer1 = null;
             String url = baseUrl + "transfer";
 
-        System.out.println("DEBUG ANDY");
-        System.out.println(transfer);
-
             try
             {
                 HttpHeaders headers = new HttpHeaders();
